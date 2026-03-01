@@ -33,3 +33,5 @@ app.use("/api/applications", applicationsRouter);
 
 app.use(notFound);
 app.use(errorHandler);
+
+export default app;
