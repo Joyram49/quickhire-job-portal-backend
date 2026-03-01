@@ -11,8 +11,11 @@ const COOKIE_NAME = "access_token";
 
 const baseCookieOptions: CookieOptions = {
   httpOnly: true,
+  // In production we expect the API to be called from a different origin
+  // (e.g. localhost:3000 -> your-vercel-api.vercel.app), so we must allow
+  // cross-site cookies.
   secure: env.NODE_ENV === "production",
-  sameSite: "lax",
+  sameSite: env.NODE_ENV === "production" ? "none" : "lax",
   path: "/",
 };
 
@@ -82,6 +85,7 @@ export async function login(req: Request, res: Response) {
       name: user.name,
       email: user.email,
       role: user.role,
+      token,
     },
   });
 }
