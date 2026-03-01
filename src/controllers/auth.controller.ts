@@ -98,3 +98,18 @@ export async function logout(_req: Request, res: Response) {
     })
     .json({ success: true });
 }
+
+export async function getMe(req: Request, res: Response) {
+  const userId = req.user!.sub;
+
+  const user = await User.findById(userId).select("-password_hash");
+
+  if (!user) {
+    throw new HttpError(404, "User not found");
+  }
+
+  res.json({
+    success: true,
+    data: user,
+  });
+}

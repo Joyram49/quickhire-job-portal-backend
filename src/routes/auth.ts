@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
-import { login, logout, signup } from "../controllers/auth.controller";
+import { login, logout, signup, getMe } from "../controllers/auth.controller";
 import { requireAuth } from "../middleware/requireAuth";
 
 export const authRouter = Router();
@@ -9,3 +9,4 @@ export const authRouter = Router();
 authRouter.post("/signup", asyncHandler(signup));
 authRouter.post("/login", asyncHandler(login));
 authRouter.post("/logout", requireAuth, asyncHandler(logout));
+authRouter.get("/me", requireAuth, asyncHandler(getMe));
